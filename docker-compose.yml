@@ -69,7 +69,7 @@ services:
     working_dir: /app
     command: php artisan queue:work --tries=3
     volumes:
-      - .:/app
+      - ./server:/app
       - ./server/.docker/local/php/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - app
