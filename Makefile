@@ -27,13 +27,13 @@ mysql:
 
 # app操作
 composer-install:
-	docker-compose exec app composer install
+	docker-compose run --rm app composer install
 
 yarn-ci-client:
-	docker-compose exec client yarn install --immutable --immutable-cache --check-cache
+	docker-compose run --rm client yarn install --immutable --immutable-cache --check-cache
 
 yarn-ci-app:
-	docker-compose exec app yarn install --immutable --immutable-cache --check-cache
+	docker-compose run --rm app yarn install --immutable --immutable-cache --check-cache
 
 migrate:
 	docker-compose exec app php artisan migrate
@@ -60,9 +60,9 @@ open-laravel:
 # 初期化
 init:
 	@make copy-env
-	@make up
 	@make yarn-ci-client
 	@make yarn-ci-app
+	@make up
 	@make composer-install
 	@make key-generate
 	@make migrate
