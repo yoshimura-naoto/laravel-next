@@ -29,7 +29,10 @@ mysql:
 composer-install:
 	docker-compose exec app composer install
 
-yarn-ci:
+yarn-ci-client:
+	docker-compose exec app yarn install --immutable --immutable-cache --check-cache
+
+yarn-ci-app:
 	docker-compose exec app yarn install --immutable --immutable-cache --check-cache
 
 migrate:
@@ -58,8 +61,8 @@ open-laravel:
 init:
 	@make copy-env
 	@make up
-	@make yarn-ci
+	@make yarn-ci-client
+	@make yarn-ci-app
 	@make composer-install
 	@make key-generate
 	@make migrate
-	@make open
