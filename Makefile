@@ -50,9 +50,9 @@ open:
 # 初期化
 init:
 	@make copy-env
-	@make composer-install
-	@make yarn-ci
-	@make key-generate
 	@make up
+	@make yarn-ci
+	@make composer-install
+	@make key-generate
 	@make migrate
 	@make open
