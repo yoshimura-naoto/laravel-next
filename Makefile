@@ -15,6 +15,10 @@ plune:
 	docker system prune -a --volumes
 
 # コンテナ
+.PHONY: client
+client:
+	docker-compose exec client /bin/bash
+
 app:
 	docker-compose exec app /bin/bash
 
@@ -44,7 +48,10 @@ key-generate:
 copy-env:
 	cp ./server/.env.example ./server/.env
 
-open:
+open-next:
+	open -a "Google Chrome" http://localhost:3000
+
+open-laravel:
 	open -a "Google Chrome" http://localhost
 
 # 初期化

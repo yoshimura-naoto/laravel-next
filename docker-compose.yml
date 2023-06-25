@@ -1,13 +1,25 @@
 version: '3'
 
 services:
+  client:
+    container_name: laravel-next-client
+    build:
+      context: .
+      dockerfile: ./client/.docker/node/Dockerfile
+    working_dir: /app
+    ports:
+      - 3000:3000
+    command: yarn dev
+    volumes:
+      - ./client:/app
+
   app:
     container_name: laravel-next-app
     build:
       context: .
       dockerfile: ./server/.docker/local/php/Dockerfile
     ports:
-      - "9000:9000"
+      - 9000:9000
     volumes:
       - ./server:/app
       - ./server/.docker/local/php/php.ini:/usr/local/etc/php/conf.d/php.ini
@@ -20,7 +32,7 @@ services:
       context: .
       dockerfile: ./server/.docker/local/nginx/Dockerfile
     ports:
-      - "80:80"
+      - 80:80
     volumes:
       - ./server/public:/app/public
       - ./server/.docker/local/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -36,7 +48,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - ./server/.docker/local/mysql/data:/var/lib/mysql
       - ./server/.docker/local/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -47,7 +59,7 @@ services:
     container_name: laravel-next-redis
     image: redis:6.2-buster
     ports:
-      - "6379:6379"
+      - 6379:6379
 
   queue:
     container_name: laravel-next-queue
@@ -67,8 +79,8 @@ services:
     container_name: laravel-next-minio
     image: minio/minio
     ports:
-      - "9001:9001"
-      - "9002:9002"
+      - 9001:9001
+      - 9002:9002
     environment:
       MINIO_ROOT_USER: access_key
       MINIO_ROOT_PASSWORD: secret_key
@@ -87,3 +99,4 @@ services:
         mc policy set private minio/private
     depends_on:
      - minio
+
