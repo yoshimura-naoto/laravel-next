@@ -30,7 +30,7 @@ composer-install:
 	docker-compose exec app composer install
 
 yarn-ci-client:
-	docker-compose exec app yarn install --immutable --immutable-cache --check-cache
+	docker-compose exec client yarn install --immutable --immutable-cache --check-cache
 
 yarn-ci-app:
 	docker-compose exec app yarn install --immutable --immutable-cache --check-cache
